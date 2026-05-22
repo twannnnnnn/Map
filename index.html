@@ -11,13 +11,12 @@
   --bg:#0d0f0d;--surface:#141714;--surface2:#1b1f1b;
   --border:#2a2f2a;--border2:#3a3f3a;
   --green:#4caf50;--green-dim:#2d6b30;--green-bright:#76ff79;
-  --red:#ef5350;
+  --red:#ef5350;--amber:#ffb74d;
   --text:#d4e8d4;--text-dim:#7a9a7a;--text-muted:#4a6a4a;
   --font-d:'VT323',monospace;--font-b:'IBM Plex Mono',monospace;
   --header:52px;--panel:300px;--bar:52px;
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:14px;overflow:hidden;touch-action:none;}
-
 header{height:var(--header);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:10px;flex-shrink:0;z-index:100;position:relative;}
 header h1{font-family:var(--font-d);font-size:24px;color:var(--green-bright);letter-spacing:2px;line-height:1;white-space:nowrap;}
 .sep{width:1px;height:20px;background:var(--border2);flex-shrink:0;}
@@ -26,26 +25,21 @@ header h1{font-family:var(--font-d);font-size:24px;color:var(--green-bright);let
 .btn.primary{border-color:var(--green-dim);background:var(--green-dim);color:var(--green-bright);}
 .btn.primary:hover,.btn.primary:active{background:#357237;border-color:var(--green);}
 .btn.icon-only{padding:7px;min-width:36px;justify-content:center;}
+.btn.danger{border-color:var(--red);color:var(--red);}
+.btn.danger:hover{background:#2a1515;}
 #coord-display{font-size:11px;color:var(--text-dim);margin-left:auto;letter-spacing:.05em;white-space:nowrap;display:none;}
 @media(min-width:600px){#coord-display{display:block;}}
-
 .app{display:flex;height:calc(100vh - var(--header));position:relative;}
-
 .sidebar{width:var(--panel);min-width:var(--panel);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;transition:transform .25s ease;}
-@media(max-width:767px){
-  .sidebar{position:absolute;top:0;left:0;height:100%;z-index:50;transform:translateX(-100%);}
-  .sidebar.open{transform:translateX(0);}
-}
+@media(max-width:767px){.sidebar{position:absolute;top:0;left:0;height:100%;z-index:50;transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}}
 .sidebar-tabs{display:flex;border-bottom:1px solid var(--border);}
 .stab{flex:1;padding:12px 4px;text-align:center;font-size:11px;color:var(--text-muted);cursor:pointer;border:none;background:transparent;font-family:var(--font-b);border-bottom:2px solid transparent;transition:color .15s;-webkit-tap-highlight-color:transparent;}
 .stab.active{color:var(--green-bright);border-bottom-color:var(--green);}
 .sidebar-body{flex:1;overflow-y:auto;padding:14px;-webkit-overflow-scrolling:touch;}
 .sidebar-body::-webkit-scrollbar{width:4px;}
 .sidebar-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-
 #overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:49;}
 @media(max-width:767px){#overlay.show{display:block;}}
-
 .section-title{font-size:10px;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;margin-top:16px;}
 .section-title:first-child{margin-top:0;}
 .field{margin-bottom:10px;}
@@ -54,14 +48,12 @@ header h1{font-family:var(--font-d);font-size:24px;color:var(--green-bright);let
 .field input:focus{border-color:var(--green-dim);}
 .coord-row{display:flex;gap:8px;}
 .coord-row .field{flex:1;}
-
 .drop-zone{border:1px dashed var(--border2);border-radius:6px;padding:22px 12px;text-align:center;cursor:pointer;position:relative;transition:border-color .15s,background .15s;background:var(--surface2);margin-bottom:10px;}
 .drop-zone:hover,.drop-zone.over{border-color:var(--green);background:#1a231a;}
 .drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .drop-zone p{font-size:13px;color:var(--text-dim);line-height:1.6;}
 .drop-zone .dz-icon{font-size:28px;margin-bottom:8px;}
 .preview-img{width:100%;border-radius:4px;border:1px solid var(--border);margin-bottom:10px;display:none;max-height:130px;object-fit:cover;}
-
 .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
 .toggle-row:last-child{border-bottom:none;}
 .toggle-row span{font-size:13px;color:var(--text-dim);}
@@ -69,50 +61,45 @@ header h1{font-family:var(--font-d);font-size:24px;color:var(--green-bright);let
 .toggle input{opacity:0;width:0;height:0;}
 .toggle-slider{position:absolute;inset:0;background:var(--border2);border-radius:10px;cursor:pointer;transition:background .2s;}
 .toggle-slider::before{content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;background:var(--text-muted);border-radius:50%;transition:transform .2s,background .2s;}
-.toggle input:checked + .toggle-slider{background:var(--green-dim);}
-.toggle input:checked + .toggle-slider::before{transform:translateX(16px);background:var(--green-bright);}
-
+.toggle input:checked+.toggle-slider{background:var(--green-dim);}
+.toggle input:checked+.toggle-slider::before{transform:translateX(16px);background:var(--green-bright);}
 .tab-panel{display:none;}
 .tab-panel.active{display:block;}
-
 .canvas-area{flex:1;position:relative;overflow:hidden;background:var(--bg);}
 #world-canvas{position:absolute;top:0;left:0;touch-action:none;cursor:grab;}
 #world-canvas.panning{cursor:grabbing;}
 #grid-canvas{position:absolute;top:0;left:0;pointer-events:none;}
-
 .empty-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;opacity:.4;}
 .empty-hint .big{font-family:var(--font-d);font-size:54px;color:var(--green-dim);line-height:1;}
 .empty-hint p{font-size:13px;color:var(--text-muted);margin-top:10px;line-height:1.6;}
-
 #fab{display:none;position:absolute;bottom:66px;right:16px;z-index:60;width:54px;height:54px;border-radius:50%;background:var(--green-dim);border:1px solid var(--green);color:var(--green-bright);font-size:28px;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 16px rgba(0,0,0,.5);-webkit-tap-highlight-color:transparent;}
 @media(max-width:767px){#fab{display:flex;}}
-
 .zoom-btns{position:absolute;top:12px;right:12px;z-index:40;display:flex;flex-direction:column;gap:4px;}
 .zoom-btns .btn{min-height:40px;min-width:40px;padding:0;justify-content:center;font-size:18px;}
-
 .statusbar{position:absolute;bottom:0;left:0;right:0;height:var(--bar);background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:16px;font-size:11px;color:var(--text-muted);z-index:30;overflow:hidden;}
 .sb-item{white-space:nowrap;}
 @media(max-width:480px){.sb-hide{display:none;}}
-
 #bottom-sheet{display:none;position:absolute;bottom:var(--bar);left:0;right:0;z-index:55;background:var(--surface);border-top:1px solid var(--border);border-radius:14px 14px 0 0;max-height:82vh;overflow-y:auto;padding:16px;transform:translateY(100%);transition:transform .3s ease;-webkit-overflow-scrolling:touch;}
 #bottom-sheet.open{transform:translateY(0);}
 .drag-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px;cursor:pointer;}
 @media(max-width:767px){#bottom-sheet{display:block;}}
-
 #notif{position:fixed;bottom:68px;left:50%;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--green-dim);color:var(--green-bright);font-size:13px;padding:10px 18px;border-radius:6px;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;font-family:var(--font-b);}
 #notif.show{opacity:1;}
-
 input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointer;}
-
 .hint-box{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 12px;font-size:12px;color:var(--text-dim);line-height:1.8;margin-bottom:12px;}
 .hint-box strong{color:var(--green-bright);}
 
-/* chunk quick-fill helper */
-.chunk-helper{background:var(--surface2);border:1px solid var(--border2);border-radius:4px;padding:10px 12px;margin-bottom:10px;}
-.chunk-helper p{font-size:11px;color:var(--text-muted);margin-bottom:8px;}
-.chunk-row{display:flex;gap:6px;align-items:flex-end;}
-.chunk-row .field{flex:1;margin:0;}
-.chunk-row .btn{flex-shrink:0;height:36px;}
+/* config banner */
+#config-banner{background:#1a1500;border:1px solid var(--amber);border-radius:6px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--amber);line-height:1.8;}
+#config-banner strong{color:#ffd54f;}
+#config-banner input{width:100%;background:#0d0f0d;border:1px solid #5a4a00;color:var(--amber);font-family:var(--font-b);font-size:12px;padding:6px 8px;border-radius:3px;outline:none;margin-top:4px;margin-bottom:8px;}
+#config-banner input:focus{border-color:var(--amber);}
+
+/* sync indicator */
+#sync-dot{width:7px;height:7px;border-radius:50%;background:var(--text-muted);flex-shrink:0;transition:background .3s;}
+#sync-dot.syncing{background:var(--amber);}
+#sync-dot.ok{background:var(--green);}
+#sync-dot.err{background:var(--red);}
 </style>
 </head>
 <body>
@@ -129,12 +116,15 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
   <button class="btn icon-only" id="hdr-menu" onclick="toggleSidebar()" style="display:none;" aria-label="Menu">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
-  <span id="coord-display">X: — , Z: —</span>
+  <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
+    <div id="sync-dot"></div>
+    <span id="sync-label" style="font-size:11px;color:var(--text-muted);">not connected</span>
+  </div>
+  <span id="coord-display" style="margin-left:12px;">X: — , Z: —</span>
 </header>
 
 <div class="app">
   <div id="overlay" onclick="closeSidebar()"></div>
-
   <div class="sidebar" id="sidebar">
     <div class="sidebar-tabs">
       <button class="stab active" onclick="showTab('upload')" id="tab-upload">Upload</button>
@@ -143,9 +133,22 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
     </div>
     <div class="sidebar-body">
 
+      <!-- UPLOAD TAB -->
       <div class="tab-panel active" id="panel-upload">
+
+        <!-- Supabase config (shown until keys are saved) -->
+        <div id="config-banner">
+          <strong>⚙ Connect to Supabase</strong><br/>
+          Paste your keys once — saved in your browser.<br/>
+          <label style="font-size:11px;opacity:.7;">Project URL</label>
+          <input type="text" id="cfg-url" placeholder="https://xxxx.supabase.co"/>
+          <label style="font-size:11px;opacity:.7;">Anon public key</label>
+          <input type="text" id="cfg-key" placeholder="sb_publishable_... or eyJh..."/>
+          <button class="btn primary" style="width:100%;justify-content:center;min-height:38px;" onclick="saveConfig()">Save & connect</button>
+        </div>
+
         <div class="hint-box">
-          Enter the <strong>chunk coordinates</strong> from Xaero's map. New uploads <strong>overwrite</strong> whatever was there before.
+          Enter <strong>chunk coordinates</strong> from Xaero's map. Uploads are shared with everyone instantly.
         </div>
 
         <div class="section-title">Screenshot</div>
@@ -170,9 +173,10 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
         <button class="btn primary" style="width:100%;justify-content:center;margin-top:12px;min-height:44px;font-size:14px;" onclick="submitUpload('d')">
           Place on world map
         </button>
-        <button class="btn" style="width:100%;justify-content:center;margin-top:8px;min-height:40px;border-color:var(--red);color:var(--red);" onclick="clearMap()">Clear entire map</button>
+        <button class="btn danger" style="width:100%;justify-content:center;margin-top:8px;min-height:40px;" onclick="clearMap()">Clear entire map</button>
       </div>
 
+      <!-- OPTIONS TAB -->
       <div class="tab-panel" id="panel-options">
         <div class="section-title">Display</div>
         <div class="toggle-row"><span>Chunk grid (16×16)</span><label class="toggle"><input type="checkbox" id="tog-grid" checked onchange="redraw()"><span class="toggle-slider"></span></label></div>
@@ -182,13 +186,20 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
         <div class="section-title" style="margin-top:18px;">Grid opacity</div>
         <input type="range" min="5" max="80" value="25" id="grid-opacity" oninput="redraw()"/>
         <div class="section-title" style="margin-top:12px;">Map opacity</div>
-        <input type="range" min="20" max="100" value="100" id="map-opacity" oninput="redraw()"/>
+        <input type="range" min="20" max="100" value="100" id="map-opacity" oninput="redrawWorld()"/>
+        <div class="section-title" style="margin-top:18px;">Sync</div>
+        <button class="btn" style="width:100%;justify-content:center;min-height:44px;" onclick="loadFromSupabase()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Sync now
+        </button>
+        <button class="btn" style="width:100%;justify-content:center;min-height:44px;margin-top:8px;" onclick="resetConfig()">Reset Supabase keys</button>
         <div class="section-title" style="margin-top:18px;">Export</div>
         <button class="btn" style="width:100%;justify-content:center;min-height:44px;" onclick="exportMap()">Export as PNG</button>
       </div>
 
+      <!-- GOTO TAB -->
       <div class="tab-panel" id="panel-goto">
-        <div class="section-title">Jump to block coordinates</div>
+        <div class="section-title">Jump to block coords</div>
         <div class="coord-row">
           <div class="field"><label>X</label><input type="number" id="goto-x" placeholder="0" inputmode="numeric"/></div>
           <div class="field"><label>Z</label><input type="number" id="goto-z" placeholder="0" inputmode="numeric"/></div>
@@ -202,9 +213,9 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
         <button class="btn" style="width:100%;justify-content:center;margin-top:10px;min-height:44px;" onclick="gotoChunk()">Go to chunk</button>
         <div class="section-title" style="margin-top:18px;">Controls</div>
         <div style="font-size:12px;color:var(--text-muted);line-height:2.4;">
-          <div>📱 Pinch — zoom</div>
+          <div>📱 Pinch — zoom in/out</div>
           <div>📱 Drag — pan</div>
-          <div>🖥 Scroll — zoom</div>
+          <div>🖥 Scroll — zoom in/out</div>
           <div>🖥 Drag — pan</div>
           <div>🖥 Double-click — zoom in</div>
         </div>
@@ -213,12 +224,13 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
     </div>
   </div>
 
+  <!-- MAP -->
   <div class="canvas-area" id="canvas-area">
     <canvas id="world-canvas"></canvas>
     <canvas id="grid-canvas"></canvas>
     <div class="empty-hint" id="empty-hint">
       <div class="big">[ ]</div>
-      <p>Upload a Xaero's screenshot<br/>to start building your world map</p>
+      <p>Connect Supabase then upload<br/>a Xaero's screenshot</p>
     </div>
     <div class="zoom-btns">
       <button class="btn icon-only" onclick="adjustZoom(1.5)">+</button>
@@ -236,10 +248,10 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
 
   <div id="fab" onclick="openSheet()">＋</div>
 
+  <!-- MOBILE BOTTOM SHEET -->
   <div id="bottom-sheet">
     <div class="drag-handle" onclick="closeSheet()"></div>
     <div style="font-family:var(--font-d);font-size:20px;color:var(--green-bright);margin-bottom:10px;">UPLOAD MAP AREA</div>
-
     <div class="drop-zone" id="dz-m">
       <input type="file" accept="image/*" id="file-m"/>
       <div class="dz-icon">📂</div>
@@ -263,362 +275,4 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
       </div>
     </div>
     <div id="block-preview-m" style="font-size:11px;color:var(--text-muted);margin:6px 0 2px;min-height:16px;"></div>
-    <button class="btn primary" style="width:100%;justify-content:center;margin-top:14px;min-height:48px;font-size:15px;" onclick="submitUpload('m')">Place on world map</button>
-    <button class="btn" style="width:100%;justify-content:center;margin-top:8px;min-height:44px;" onclick="closeSheet()">Cancel</button>
-  </div>
-</div>
-
-<div id="notif"></div>
-
-<script>
-// ─── AREA STORE ───────────────────────────────────────────────────────────────
-// Each area: { img, src, x1, z1, x2, z2 }
-// src = base64 dataURL stored in localStorage for persistence
-const areas = [];
-const STORAGE_KEY = 'mc-world-map-v1';
-
-function saveToStorage() {
-  try {
-    const data = areas.map(a => ({ src:a.src, x1:a.x1, z1:a.z1, x2:a.x2, z2:a.z2 }));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch(e) {
-    notify('Storage full — try removing some areas');
-  }
-}
-
-function loadFromStorage() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    const data = JSON.parse(raw);
-    if (!data.length) return;
-    let loaded = 0;
-    notify('Loading ' + data.length + ' saved area' + (data.length!==1?'s':'') + '...');
-    data.forEach(d => {
-      const img = new Image();
-      img.onload = () => {
-        areas.push({ img, src:d.src, x1:d.x1, z1:d.z1, x2:d.x2, z2:d.z2 });
-        loaded++;
-        if (loaded === data.length) {
-          updateAreaCount(); redraw(); fitAll();
-          notify('Loaded ' + loaded + ' saved area' + (loaded!==1?'s':''));
-        }
-      };
-      img.src = d.src;
-    });
-  } catch(e) { /* corrupt storage, ignore */ }
-}
-
-// ─── VIEW STATE ───────────────────────────────────────────────────────────────
-let viewX = 0, viewY = 0, zoom = 1;
-let isPanning = false, panStart = null;
-let pendingD = null, pendingM = null;
-
-const worldCanvas = document.getElementById('world-canvas');
-const wCtx = worldCanvas.getContext('2d');
-const gridCanvas = document.getElementById('grid-canvas');
-const gCtx = gridCanvas.getContext('2d');
-const areaEl = document.getElementById('canvas-area');
-
-// ─── RESPONSIVE ──────────────────────────────────────────────────────────────
-function applyResponsive() {
-  const mob = window.innerWidth < 768;
-  document.getElementById('hdr-menu').style.display = mob ? 'flex' : 'none';
-  ['hdr-add','hdr-opts','hdr-goto'].forEach(id => document.getElementById(id).style.display = mob ? 'none' : 'flex');
-}
-applyResponsive();
-window.addEventListener('resize', () => { applyResponsive(); resizeCanvases(); });
-
-// ─── SIDEBAR / SHEET ─────────────────────────────────────────────────────────
-function toggleSidebar() { const s=document.getElementById('sidebar'),o=document.getElementById('overlay'); s.classList.contains('open')?closeSidebar():(s.classList.add('open'),o.classList.add('show')); }
-function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
-function sidebarTab(t) { showTab(t); if(window.innerWidth<768){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('show');} }
-function openSheet() { document.getElementById('bottom-sheet').classList.add('open'); }
-function closeSheet() { document.getElementById('bottom-sheet').classList.remove('open'); }
-function showTab(n) {
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('panel-'+n).classList.add('active');
-  document.getElementById('tab-'+n).classList.add('active');
-}
-
-// ─── CANVAS RESIZE ───────────────────────────────────────────────────────────
-function resizeCanvases() {
-  worldCanvas.width = gridCanvas.width = areaEl.clientWidth;
-  worldCanvas.height = gridCanvas.height = areaEl.clientHeight;
-  redraw();
-}
-resizeCanvases();
-
-// ─── TRANSFORMS ──────────────────────────────────────────────────────────────
-// zoom unit: screen pixels per BLOCK
-function w2s(wx, wz) { return { sx:(wx-viewX)*zoom + worldCanvas.width/2, sy:(wz-viewY)*zoom + worldCanvas.height/2 }; }
-function s2w(sx, sy) { return { wx:(sx - worldCanvas.width/2)/zoom + viewX, wz:(sy - worldCanvas.height/2)/zoom + viewY }; }
-
-// ─── REDRAW ───────────────────────────────────────────────────────────────────
-function redraw() {
-  redrawWorld();
-  redrawGrid();
-}
-
-function redrawWorld() {
-  const W = worldCanvas.width, H = worldCanvas.height;
-  wCtx.clearRect(0, 0, W, H);
-  const op = document.getElementById('map-opacity').value / 100;
-  wCtx.globalAlpha = op;
-  // draw each area — later ones paint over earlier ones for the same pixels
-  for (const a of areas) {
-    const { sx:x1s, sy:z1s } = w2s(a.x1, a.z1);
-    const { sx:x2s, sy:z2s } = w2s(a.x2, a.z2);
-    const pw = x2s - x1s, ph = z2s - z1s;
-    // skip if completely off screen
-    if (x2s < 0 || x1s > W || z2s < 0 || z1s > H) continue;
-    // smooth when zoomed out or normal, pixelated only when zoomed in beyond natural resolution
-    const pixelated = pw > a.img.naturalWidth * 2;
-    wCtx.imageSmoothingEnabled = !pixelated;
-    wCtx.imageSmoothingQuality = 'high';
-    wCtx.drawImage(a.img, x1s, z1s, pw, ph);
-  }
-  wCtx.globalAlpha = 1;
-  document.getElementById('empty-hint').style.display = areas.length === 0 ? 'block' : 'none';
-}
-
-function redrawGrid() {
-  const W = gridCanvas.width, H = gridCanvas.height;
-  gCtx.clearRect(0, 0, W, H);
-  const showGrid    = document.getElementById('tog-grid').checked;
-  const showReg     = document.getElementById('tog-regions').checked;
-  const showCoords  = document.getElementById('tog-coords').checked;
-  const showOrigin  = document.getElementById('tog-origin').checked;
-  const op = document.getElementById('grid-opacity').value / 100;
-  const tl = s2w(0,0), br = s2w(W,H);
-
-  if (showGrid && zoom > 0.05) {
-    const C=16;
-    const cx1=Math.floor(tl.wx/C), cx2=Math.ceil(br.wx/C);
-    const cz1=Math.floor(tl.wz/C), cz2=Math.ceil(br.wz/C);
-    gCtx.strokeStyle=`rgba(76,175,80,${op})`; gCtx.lineWidth=0.5;
-    for(let cx=cx1;cx<=cx2;cx++){const{sx}=w2s(cx*C,0);gCtx.beginPath();gCtx.moveTo(sx,0);gCtx.lineTo(sx,H);gCtx.stroke();}
-    for(let cz=cz1;cz<=cz2;cz++){const{sy}=w2s(0,cz*C);gCtx.beginPath();gCtx.moveTo(0,sy);gCtx.lineTo(W,sy);gCtx.stroke();}
-    if (showCoords && zoom > 1.5) {
-      const pxPerChunk = C * zoom;
-      if (pxPerChunk > 40) {
-        gCtx.font=`${Math.min(11,pxPerChunk*.18)}px 'IBM Plex Mono',monospace`;
-        gCtx.fillStyle=`rgba(76,175,80,${Math.min(1,op*2.5)})`; gCtx.textAlign='center'; gCtx.textBaseline='middle';
-        for(let cx=cx1;cx<cx2;cx++) for(let cz=cz1;cz<cz2;cz++){
-          const{sx,sy}=w2s((cx+.5)*C,(cz+.5)*C); gCtx.fillText(`${cx},${cz}`,sx,sy);
-        }
-      }
-    }
-  }
-  if (showReg) {
-    const R=512;
-    const rx1=Math.floor(tl.wx/R),rx2=Math.ceil(br.wx/R),rz1=Math.floor(tl.wz/R),rz2=Math.ceil(br.wz/R);
-    gCtx.strokeStyle=`rgba(255,183,77,${Math.min(1,op*2)})`; gCtx.lineWidth=1.5;
-    for(let rx=rx1;rx<=rx2;rx++){const{sx}=w2s(rx*R,0);gCtx.beginPath();gCtx.moveTo(sx,0);gCtx.lineTo(sx,H);gCtx.stroke();}
-    for(let rz=rz1;rz<=rz2;rz++){const{sy}=w2s(0,rz*R);gCtx.beginPath();gCtx.moveTo(0,sy);gCtx.lineTo(W,sy);gCtx.stroke();}
-  }
-  if (showOrigin) {
-    const{sx,sy}=w2s(0,0);
-    if(sx>-30&&sx<W+30&&sy>-30&&sy<H+30){
-      const sz=Math.max(8,20*zoom);
-      gCtx.strokeStyle='rgba(239,83,80,.85)'; gCtx.lineWidth=1.5;
-      gCtx.beginPath();gCtx.moveTo(sx-sz,sy);gCtx.lineTo(sx+sz,sy);gCtx.stroke();
-      gCtx.beginPath();gCtx.moveTo(sx,sy-sz);gCtx.lineTo(sx,sy+sz);gCtx.stroke();
-      gCtx.fillStyle='rgba(239,83,80,.9)'; gCtx.font="11px 'IBM Plex Mono',monospace";
-      gCtx.textAlign='left'; gCtx.textBaseline='bottom'; gCtx.fillText('0,0',sx+sz+4,sy-2);
-    }
-  }
-}
-
-// ─── BLOCK COORD PREVIEW ─────────────────────────────────────────────────────
-function updatePreview(slot) {
-  const cx1 = parseInt(document.getElementById('cx1-'+slot).value);
-  const cz1 = parseInt(document.getElementById('cz1-'+slot).value);
-  const cx2 = parseInt(document.getElementById('cx2-'+slot).value);
-  const cz2 = parseInt(document.getElementById('cz2-'+slot).value);
-  const el = document.getElementById('block-preview-'+slot);
-  if (!el) return;
-  if ([cx1,cz1,cx2,cz2].some(isNaN)) { el.textContent = ''; return; }
-  const bx1=Math.min(cx1,cx2)*16, bz1=Math.min(cz1,cz2)*16;
-  const bx2=Math.max(cx1,cx2)*16+16, bz2=Math.max(cz1,cz2)*16+16;
-  const cw=Math.abs(cx2-cx1)+1, ch=Math.abs(cz2-cz1)+1;
-  el.textContent = `Blocks (${bx1},${bz1}) → (${bx2},${bz2})  ·  ${cw}×${ch} chunks`;
-}
-
-// ─── FILE UPLOAD ──────────────────────────────────────────────────────────────
-function setupDZ(dzId, inputId, prevId, slot) {
-  const inp = document.getElementById(inputId);
-  const dz  = document.getElementById(dzId);
-  inp.addEventListener('change', e => { if(e.target.files[0]) loadFile(e.target.files[0], prevId, slot); });
-  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
-  dz.addEventListener('dragleave', () => dz.classList.remove('over'));
-  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); if(e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0], prevId, slot); });
-}
-setupDZ('dz-d','file-d','prev-d','d');
-setupDZ('dz-m','file-m','prev-m','m');
-
-function loadFile(file, prevId, slot) {
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = new Image();
-    img.onload = () => {
-      if (slot==='d') pendingD=img; else pendingM=img;
-      const p=document.getElementById(prevId); p.src=e.target.result; p.style.display='block';
-      notify('Image ready — enter coordinates');
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-// ─── PLACE AREA ───────────────────────────────────────────────────────────────
-function submitUpload(slot) {
-  const img = slot==='d' ? pendingD : pendingM;
-  if (!img) { notify('Pick an image file first!'); return; }
-  const cx1 = parseInt(document.getElementById('cx1-'+slot).value);
-  const cz1 = parseInt(document.getElementById('cz1-'+slot).value);
-  const cx2 = parseInt(document.getElementById('cx2-'+slot).value);
-  const cz2 = parseInt(document.getElementById('cz2-'+slot).value);
-  if ([cx1,cz1,cx2,cz2].some(isNaN)) { notify('Enter all four chunk coordinates!'); return; }
-
-  // convert chunk coords → block coords
-  const x1 = Math.min(cx1,cx2) * 16;
-  const z1 = Math.min(cz1,cz2) * 16;
-  const x2 = Math.max(cx1,cx2) * 16 + 16;
-  const z2 = Math.max(cz1,cz2) * 16 + 16;
-
-  // get the src dataURL from the img element so we can persist it
-  const src = img.src;
-  const area = { img, src, x1, z1, x2, z2 };
-
-  // exact same bounds → replace, otherwise push on top
-  const existIdx = areas.findIndex(a => a.x1===x1 && a.z1===z1 && a.x2===x2 && a.z2===z2);
-  if (existIdx !== -1) areas.splice(existIdx, 1);
-  areas.push(area);
-
-  saveToStorage();
-  updateAreaCount();
-  redraw();
-  fitAll();
-  const cw=Math.abs(cx2-cx1)+1, ch=Math.abs(cz2-cz1)+1;
-  notify(`Placed! ${cw}×${ch} chunk${cw*ch!==1?'s':''} on world map`);
-
-  // reset form
-  if (slot==='d') {
-    pendingD=null; document.getElementById('prev-d').style.display='none';
-    document.getElementById('file-d').value='';
-    ['cx1-d','cz1-d','cx2-d','cz2-d'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('block-preview-d').textContent='';
-  } else {
-    pendingM=null; document.getElementById('prev-m').style.display='none';
-    document.getElementById('file-m').value='';
-    ['cx1-m','cz1-m','cx2-m','cz2-m'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('block-preview-m').textContent='';
-    closeSheet();
-  }
-}
-
-function updateAreaCount() {
-  document.getElementById('sb-areas').textContent = `${areas.length} area${areas.length!==1?'s':''}`;
-}
-
-// ─── VIEW CONTROLS ────────────────────────────────────────────────────────────
-function adjustZoom(f) { setZoom(zoom*f); }
-function setZoom(z) { zoom=Math.max(0.005,Math.min(200,z)); redraw(); }
-function resetView() { viewX=0; viewY=0; setZoom(1); }
-function fitAll() {
-  if (!areas.length) return;
-  let minX=Infinity,minZ=Infinity,maxX=-Infinity,maxZ=-Infinity;
-  for(const a of areas){ minX=Math.min(minX,a.x1);minZ=Math.min(minZ,a.z1);maxX=Math.max(maxX,a.x2);maxZ=Math.max(maxZ,a.z2); }
-  viewX=(minX+maxX)/2; viewY=(minZ+maxZ)/2;
-  const W=worldCanvas.width,H=worldCanvas.height,pad=80;
-  setZoom(Math.min((W-pad*2)/(maxX-minX||16),(H-pad*2)/(maxZ-minZ||16)));
-}
-function clearMap() {
-  if(!confirm('Clear the entire world map? This also clears saved data.')) return;
-  areas.length=0;
-  localStorage.removeItem(STORAGE_KEY);
-  updateAreaCount(); redraw(); notify('Map cleared');
-}
-function gotoCoords() {
-  const x=parseFloat(document.getElementById('goto-x').value),z=parseFloat(document.getElementById('goto-z').value);
-  if(isNaN(x)||isNaN(z)){notify('Enter valid coordinates');return;}
-  viewX=x; viewY=z; redraw(); notify(`X:${Math.round(x)} Z:${Math.round(z)}`);
-  if(window.innerWidth<768) closeSidebar();
-}
-function gotoChunk() {
-  const cx=parseFloat(document.getElementById('goto-cx').value),cz=parseFloat(document.getElementById('goto-cz').value);
-  if(isNaN(cx)||isNaN(cz)){notify('Enter valid chunk coords');return;}
-  viewX=cx*16+8; viewY=cz*16+8; redraw(); notify(`Chunk [${Math.round(cx)},${Math.round(cz)}]`);
-  if(window.innerWidth<768) closeSidebar();
-}
-
-// ─── STATUS ───────────────────────────────────────────────────────────────────
-function updateStatus(wx,wz) {
-  const cx=Math.floor(wx/16),cz=Math.floor(wz/16),rx=Math.floor(wx/512),rz=Math.floor(wz/512);
-  document.getElementById('coord-display').textContent=`X: ${Math.round(wx)}  Z: ${Math.round(wz)}`;
-  document.getElementById('sb-coords').textContent=`X:${Math.round(wx)} Z:${Math.round(wz)}`;
-  document.getElementById('sb-chunk').textContent=`Chunk [${cx},${cz}]`;
-  document.getElementById('sb-region').textContent=`r.${rx}.${rz}.mca`;
-}
-
-// ─── MOUSE ────────────────────────────────────────────────────────────────────
-worldCanvas.addEventListener('mousedown', e => {
-  if(e.button===1){e.preventDefault();resetView();return;}
-  isPanning=true; panStart={x:e.clientX,y:e.clientY,vx:viewX,vy:viewY};
-  worldCanvas.classList.add('panning');
-});
-window.addEventListener('mousemove', e => {
-  const r=worldCanvas.getBoundingClientRect();
-  const{wx,wz}=s2w(e.clientX-r.left,e.clientY-r.top); updateStatus(wx,wz);
-  if(isPanning&&panStart){viewX=panStart.vx-(e.clientX-panStart.x)/zoom;viewY=panStart.vy-(e.clientY-panStart.y)/zoom;redraw();}
-});
-window.addEventListener('mouseup',()=>{isPanning=false;panStart=null;worldCanvas.classList.remove('panning');});
-worldCanvas.addEventListener('dblclick',e=>{const r=worldCanvas.getBoundingClientRect();const{wx,wz}=s2w(e.clientX-r.left,e.clientY-r.top);viewX=wx;viewY=wz;setZoom(zoom*2);});
-worldCanvas.addEventListener('wheel',e=>{
-  e.preventDefault();
-  const f=e.deltaY<0?1.15:1/1.15,r=worldCanvas.getBoundingClientRect();
-  const sx=e.clientX-r.left,sy=e.clientY-r.top,{wx,wz}=s2w(sx,sy);
-  setZoom(zoom*f);
-  const{sx:nsx,sy:nsy}=w2s(wx,wz); viewX+=(nsx-sx)/zoom; viewY+=(nsy-sy)/zoom; redraw();
-},{passive:false});
-
-// ─── TOUCH ────────────────────────────────────────────────────────────────────
-let tc=[],pd0=0,pz0=1,pc=null,pt=null;
-function gtp(e){return Array.from(e.touches).map(t=>{const r=worldCanvas.getBoundingClientRect();return{x:t.clientX-r.left,y:t.clientY-r.top};});}
-function dst(a,b){return Math.hypot(a.x-b.x,a.y-b.y);}
-worldCanvas.addEventListener('touchstart',e=>{e.preventDefault();tc=gtp(e);
-  if(tc.length===1){pt={x:tc[0].x,y:tc[0].y,vx:viewX,vy:viewY};pc=null;}
-  else if(tc.length===2){pd0=dst(tc[0],tc[1]);pz0=zoom;pc={x:(tc[0].x+tc[1].x)/2,y:(tc[0].y+tc[1].y)/2};pt=null;}
-},{passive:false});
-worldCanvas.addEventListener('touchmove',e=>{e.preventDefault();tc=gtp(e);
-  if(tc.length===1&&pt){viewX=pt.vx-(tc[0].x-pt.x)/zoom;viewY=pt.vy-(tc[0].y-pt.y)/zoom;redraw();const{wx,wz}=s2w(tc[0].x,tc[0].y);updateStatus(wx,wz);}
-  else if(tc.length===2&&pc){const d=dst(tc[0],tc[1]),nz=Math.max(0.005,Math.min(200,pz0*d/pd0));const{wx,wz}=s2w(pc.x,pc.y);zoom=nz;const{sx:nsx,sy:nsy}=w2s(wx,wz);viewX+=(nsx-pc.x)/zoom;viewY+=(nsy-pc.y)/zoom;redraw();}
-},{passive:false});
-worldCanvas.addEventListener('touchend',e=>{tc=gtp(e);if(tc.length<2)pc=null;if(tc.length===0)pt=null;},{passive:false});
-
-// ─── EXPORT ───────────────────────────────────────────────────────────────────
-function exportMap() {
-  if(!areas.length){notify('Nothing to export');return;}
-  const ec=document.createElement('canvas'); ec.width=worldCanvas.width; ec.height=worldCanvas.height;
-  const ctx=ec.getContext('2d'); ctx.fillStyle='#0d0f0d'; ctx.fillRect(0,0,ec.width,ec.height);
-  for(const a of areas){
-    const{sx:x1s,sy:z1s}=w2s(a.x1,a.z1),{sx:x2s,sy:z2s}=w2s(a.x2,a.z2);
-    ctx.drawImage(a.img,x1s,z1s,x2s-x1s,z2s-z1s);
-  }
-  ctx.drawImage(gridCanvas,0,0);
-  const lnk=document.createElement('a'); lnk.download='mc-world-map.png'; lnk.href=ec.toDataURL('image/png'); lnk.click();
-  notify('Exported as PNG');
-}
-
-// ─── NOTIFY ───────────────────────────────────────────────────────────────────
-let nT=null;
-function notify(msg){const el=document.getElementById('notif');el.textContent=msg;el.classList.add('show');clearTimeout(nT);nT=setTimeout(()=>el.classList.remove('show'),2800);}
-
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-redraw();
-loadFromStorage();
-</script>
-</body>
-</html>
+    <button class="btn primary" s
