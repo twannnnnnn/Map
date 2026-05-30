@@ -143,7 +143,7 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
           Enter <strong>chunk coordinates</strong> from Xaero's map. Uploads are shared with everyone instantly.
         </div>
 
-        <div class="section-title">Screenshot</div>
+<div class="section-title">Screenshot</div>
         <div class="drop-zone" id="dz-d">
           <input type="file" accept="image/*" id="file-d"/>
           <div class="dz-icon">🗺️</div>
@@ -165,7 +165,6 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
         <button class="btn primary" style="width:100%;justify-content:center;margin-top:12px;min-height:44px;font-size:14px;" onclick="submitUpload('d')">
           Place on world map
         </button>
-        <button class="btn danger" style="width:100%;justify-content:center;margin-top:8px;min-height:40px;" onclick="clearMap()">Clear entire map</button>
       </div>
 
       <!-- OPTIONS TAB -->
@@ -244,7 +243,7 @@ input[type=range]{width:100%;accent-color:var(--green);height:20px;cursor:pointe
   <div id="bottom-sheet">
     <div class="drag-handle" onclick="closeSheet()"></div>
     <div style="font-family:var(--font-d);font-size:20px;color:var(--green-bright);margin-bottom:10px;">UPLOAD MAP AREA</div>
-    <div class="drop-zone" id="dz-m">
+<div class="drop-zone" id="dz-m">
       <input type="file" accept="image/*" id="file-m"/>
       <div class="dz-icon">📂</div>
       <p>Tap to pick a file</p>
@@ -427,8 +426,10 @@ function redrawWorld() {
     const{sx:x1s,sy:z1s}=w2s(a.x1,a.z1),{sx:x2s,sy:z2s}=w2s(a.x2,a.z2);
     const pw=x2s-x1s, ph=z2s-z1s;
     if(x2s<0||x1s>W||z2s<0||z1s>H) continue;
-    wCtx.imageSmoothingEnabled = !(pw > a.img.naturalWidth*2);
-    wCtx.imageSmoothingQuality = 'high';
+    // smooth when zoomed out (image scaled down), pixelated when zoomed in past native res
+    const zoomed = pw > a.img.naturalWidth;
+    wCtx.imageSmoothingEnabled = !zoomed;
+    wCtx.imageSmoothingQuality = zoomed ? 'low' : 'high';
     wCtx.drawImage(a.img,x1s,z1s,pw,ph);
   }
   wCtx.globalAlpha=1;
@@ -587,14 +588,7 @@ function fitAll(){
   const W=worldCanvas.width,H=worldCanvas.height,pad=80;
   setZoom(Math.min((W-pad*2)/(maxX-minX||16),(H-pad*2)/(maxZ-minZ||16)));
 }
-async function clearMap(){
-  if(!confirm('Delete ALL areas from the shared map? This affects everyone.'))return;
-  try{
-    await sbFetch('map_areas?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'});
-    areas.length=0;updateAreaCount();redraw();notify('Map cleared for everyone');
-    setSyncStatus('ok','map empty');
-  }catch(e){notify('Clear error: '+e.message);}
-}
+
 function gotoCoords(){
   const x=parseFloat(document.getElementById('goto-x').value),z=parseFloat(document.getElementById('goto-z').value);
   if(isNaN(x)||isNaN(z)){notify('Enter valid coordinates');return;}
